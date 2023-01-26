@@ -11,13 +11,23 @@ async function createInteraction(newUser) {
   const { dataValues } = await User.create(newUser);
   delete dataValues.password;
   const userToken = tokenManagement.encode(dataValues);
-  
+
   return {
     errorCode: null,
     message: userToken,
   };
 }
 
+async function getAll() {
+  const userList = await User.findAll();
+  const userListWithoutPassword = userList.map(({ dataValues: { password, ...rest } }) => rest);
+  return {
+    errorCode: null,
+    message: userListWithoutPassword,
+  };
+}
+
 module.exports = {
   createInteraction,
+  getAll,
 };
