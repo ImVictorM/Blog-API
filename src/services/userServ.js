@@ -7,8 +7,11 @@ async function createInteraction(newUser) {
   if (validationResponse.errorCode) {
     return validationResponse;
   }
+
   const { dataValues } = await User.create(newUser);
+  delete dataValues.password;
   const userToken = tokenManagement.encode(dataValues);
+  
   return {
     errorCode: null,
     message: userToken,
