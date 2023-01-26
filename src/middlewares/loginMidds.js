@@ -1,8 +1,7 @@
 const { logginPattern } = require('../schemas/loginSchema');
 const { User } = require('../models');
-const { tokenManagement } = require('../utils');
 
-async function validateLogin(req, res, _next) {
+async function validateLogin(req, res, next) {
   const { body: loginData } = req;
   const { error } = logginPattern.validate(loginData);
   if (error) {
@@ -19,9 +18,7 @@ async function validateLogin(req, res, _next) {
   if (!userExists) {
     return res.status(400).json({ message: 'Invalid fields' });
   }
-
-  const token = tokenManagement.encode(loginData);
-  return res.status(200).json({ token });
+  return next();
 }
 
 module.exports = {
