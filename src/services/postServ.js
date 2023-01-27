@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { BlogPost, PostCategory } = require('../models');
+const { BlogPost, PostCategory, Category, User } = require('../models');
 const config = require('../config/config');
 const { postValid } = require('./validations');
 
@@ -29,6 +29,28 @@ async function createInteraction(newPost, userId) {
   }
 }
 
+async function getAll() {
+  const posts = await BlogPost.findAll({
+    attributes: { exclude: ['user_id'] },
+    include: [
+      {
+        model: Category,
+        through: {
+          attributes: [],
+        },
+        as: 'categories',
+      },
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+    ],
+  });
+  return { errorCode: null, message: posts };
+}
+
 module.exports = {
   createInteraction,
+  getAll,
 };
