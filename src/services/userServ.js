@@ -27,7 +27,24 @@ async function getAll() {
   };
 }
 
+async function getById(id) {
+  const response = await User.findByPk(id);
+  if (!response) {
+    return {
+      errorCode: 404,
+      message: 'User does not exist',
+    };
+  }
+  const { dataValues: user } = response;
+  delete user.password;
+  return {
+    errorCode: null,
+    message: user,
+  };
+}
+
 module.exports = {
   createInteraction,
   getAll,
+  getById,
 };

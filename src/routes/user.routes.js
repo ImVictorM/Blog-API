@@ -9,6 +9,11 @@ userRouter.get(
   validateToken,
   userCont.requestAll,
 );
+userRouter.get(
+  '/:id',
+  validateToken,
+  userCont.requestById,
+);
 userRouter.post(
   '/', 
   userCont.requestCreation,
