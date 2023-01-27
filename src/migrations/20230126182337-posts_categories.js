@@ -15,6 +15,7 @@ module.exports = {
           model: BLOG_POSTS_TABLE_NAME,
           key: 'id',
         },
+        primaryKey: true,
       },
       category_id: {
         type: Sequelize.INTEGER,
@@ -23,6 +24,7 @@ module.exports = {
           model: CATEGORIES_TABLE_NAME,
           key: 'id',
         },
+        primaryKey: true,
       }
     });
   },
