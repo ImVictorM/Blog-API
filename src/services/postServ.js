@@ -10,12 +10,13 @@ async function createInteraction(newPost, userId) {
   const { title, content, categoryIds } = newPost;
   try {
     const transactionResult = await sequelize.transaction(async (current) => {
-      const { dataValues } = await BlogPost.create({ title, content }, { transaction: current });
+      const { dataValues } = await BlogPost
+        .create({ title, content, userId }, { transaction: current });
       const { id: postId } = dataValues;
       const postCategoryPromises = categoryIds
         .map((categoryId) => PostCategory.create({ categoryId, postId }, { transaction: current }));
       await Promise.all(postCategoryPromises);
-      return { errorCode: null, message: { ...dataValues, userId } };
+      return { errorCode: null, message: { ...dataValues } };
     });
     return transactionResult;
   } catch (error) {

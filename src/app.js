@@ -9,7 +9,7 @@ app.use(express.json());
 app.use('/login', loginRouter);
 app.use('/user', userRouter);
 app.use('/categories', categoryRouter);
-app.user('/post', postRouter);
+app.use('/post', postRouter);
 
 app.use(handleServerError);
 

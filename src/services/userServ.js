@@ -43,8 +43,24 @@ async function getById(id) {
   };
 }
 
+async function getByEmail(email) {
+  const { dataValues: user } = await User.findOne({
+    where: {
+      email,
+    },
+    attributes: {
+      exclude: ['password', 'email'],
+    },
+  });
+  return {
+    errorCode: null,
+    message: user,
+  };
+} 
+
 module.exports = {
   createInteraction,
   getAll,
   getById,
+  getByEmail,
 };
