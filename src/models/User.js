@@ -21,5 +21,12 @@ module.exports = (sequelize, DataTypes) => {
 
   const User = sequelize.define('User', USER_MODEL_STRUCTURE, USER_MODEL_OPTIONS);
 
+  User.associate = ({ BlogPost }) => {
+    User.hasMany(BlogPost, {
+      foreignKey: 'user_id',
+      as: 'blogPosts',
+    });
+  };
+
   return User;
 };
