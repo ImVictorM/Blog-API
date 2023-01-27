@@ -9,6 +9,12 @@ async function requestCreation(req, res) {
   return res.status(201).json(message);
 }
 
+async function requestAll(_req, res) {
+  const { message } = await categoryServ.getAll();
+  return res.status(200).json(message); 
+}
+
 module.exports = {
   requestCreation,
+  requestAll,
 };

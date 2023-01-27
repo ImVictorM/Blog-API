@@ -13,6 +13,15 @@ async function createInteraction(newCategory) {
   };
 }
 
+async function getAll() {
+  const categories = await Category.findAll();
+  return {
+    errorCode: null,
+    message: categories,
+  };
+}
+
 module.exports = {
   createInteraction,
+  getAll,
 };
