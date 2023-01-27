@@ -1,9 +1,12 @@
-const { tokenManagement } = require('../utils');
+const { loginServ } = require('../services');
 
-function requestToken(req, res) {
+async function requestToken(req, res) {
   const { body: loginData } = req;
-  const token = tokenManagement.encode(loginData);
-  return res.status(200).json({ token });
+  const { errorCode, message } = await loginServ.generateToken(loginData);
+  if (errorCode) {
+    return res.status(errorCode).json({ message });
+  }
+  return res.status(200).json({ token: message });
 }
 
 module.exports = {
