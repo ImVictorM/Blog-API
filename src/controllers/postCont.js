@@ -23,7 +23,21 @@ async function requestById(req, res) {
   return res.status(200).json(message);
 }
 
+async function requestUpdate(req, res) {
+  const { 
+    body: updatedPost, 
+    params: { id: postId }, 
+    user: { id: userId }, 
+  } = req;
+  const { message, errorCode } = await postServ.updateInteraction(postId, userId, updatedPost);
+  if (errorCode) {
+    return res.status(errorCode).json({ message });
+  }
+  return res.status(200).json(message);
+}
+
 module.exports = {
+  requestUpdate,
   requestCreation,
   requestAll,
   requestById,

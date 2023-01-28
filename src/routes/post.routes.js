@@ -19,5 +19,10 @@ postRouter.post(
   validateToken,
   postCont.requestCreation,
 );
+postRouter.put(
+  '/:id',
+  validateToken,
+  postCont.requestUpdate,
+);
 
 module.exports = postRouter;

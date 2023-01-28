@@ -68,8 +68,25 @@ async function getById(id) {
   return { errorCode: null, message: post };
 }
 
+async function updateInteraction(postId, userId, { title, content }) {
+  const validationResponse = await postValid.validatePostUpdate(postId, userId, { title, content });
+  if (validationResponse.errorCode) return validationResponse;
+  try {
+    await BlogPost.update(
+      { title, content },
+      { where: { id: postId } },
+    );
+    const { message: updatedPost } = await getById(postId);
+    return { errorCode: null, message: updatedPost };
+  } catch (error) {
+    console.error(error);
+    return { errorCode: 500, message: error.message };
+  }
+}
+
 module.exports = {
   createInteraction,
   getAll,
   getById,
+  updateInteraction,
 };
