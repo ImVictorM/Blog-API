@@ -15,6 +15,8 @@ module.exports = {
           model: BLOG_POSTS_TABLE_NAME,
           key: 'id',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         primaryKey: true,
       },
       category_id: {
@@ -24,6 +26,8 @@ module.exports = {
           model: CATEGORIES_TABLE_NAME,
           key: 'id',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         primaryKey: true,
       }
     });
