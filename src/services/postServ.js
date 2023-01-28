@@ -31,13 +31,10 @@ async function createInteraction(newPost, userId) {
 
 async function getAll() {
   const posts = await BlogPost.findAll({
-    attributes: { exclude: ['user_id'] },
     include: [
       {
         model: Category,
-        through: {
-          attributes: [],
-        },
+        through: { attributes: [] },
         as: 'categories',
       },
       {
@@ -50,7 +47,29 @@ async function getAll() {
   return { errorCode: null, message: posts };
 }
 
+async function getById(id) {
+  const post = await BlogPost.findByPk(id, {
+    include: [
+      {
+        model: Category,
+        through: { attributes: [] },
+        as: 'categories',
+      },
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+    ],
+  });
+  if (!post) {
+    return { errorCode: 404, message: 'Post does not exist' };
+  }
+  return { errorCode: null, message: post };
+}
+
 module.exports = {
   createInteraction,
   getAll,
+  getById,
 };
