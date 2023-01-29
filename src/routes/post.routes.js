@@ -24,5 +24,10 @@ postRouter.put(
   validateToken,
   postCont.requestUpdate,
 );
+postRouter.delete(
+  '/:id',
+  validateToken,
+  postCont.requestDelete,
+);
 
 module.exports = postRouter;

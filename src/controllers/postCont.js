@@ -36,9 +36,23 @@ async function requestUpdate(req, res) {
   return res.status(200).json(message);
 }
 
+async function requestDelete(req, res) {
+  const {
+    params: { id: postId },
+    user: { id: userId },
+  } = req;
+
+  const { errorCode, message } = await postServ.deleteInteraction(postId, userId);
+  if (errorCode) {
+    return res.status(errorCode).json({ message });
+  }
+  return res.status(204).end();
+}
+
 module.exports = {
   requestUpdate,
   requestCreation,
   requestAll,
   requestById,
+  requestDelete,
 };

@@ -84,9 +84,23 @@ async function updateInteraction(postId, userId, { title, content }) {
   }
 }
 
+async function deleteInteraction(postId, userId) {
+  const validationResponse = await postValid.validatePostExistenceAndCredentials(postId, userId);
+  if (validationResponse.errorCode) return validationResponse;
+  try {
+    await BlogPost.destroy({
+      where: { id: postId },
+    });
+    return { errorCode: null, message: 'Deleted successfully' };
+  } catch (error) {
+    return { errorCode: 500, message: error.message };
+  }
+}
+
 module.exports = {
   createInteraction,
   getAll,
   getById,
   updateInteraction,
+  deleteInteraction,
 };
