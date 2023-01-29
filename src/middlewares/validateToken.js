@@ -8,7 +8,10 @@ module.exports = async (req, res, next) => {
   }
   try {
     const { email } = tokenManagement.decode(token);
-    const { message } = await userServ.getByEmail(email);
+    const { message, errorCode } = await userServ.getByEmail(email);
+    if (errorCode) {
+      return res.status(errorCode).json({ message });
+    }
     req.user = message;
     return next();
   } catch (error) {

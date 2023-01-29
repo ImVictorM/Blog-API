@@ -44,7 +44,7 @@ async function getById(id) {
 }
 
 async function getByEmail(email) {
-  const { dataValues: user } = await User.findOne({
+  const user = await User.findOne({
     where: {
       email,
     },
@@ -52,10 +52,12 @@ async function getByEmail(email) {
       exclude: ['password', 'email'],
     },
   });
-  return {
-    errorCode: null,
-    message: user,
-  };
+
+  if (!user) {
+    return { errorCode: 404, message: 'User not found' };
+  }
+
+  return { errorCode: null, message: user.dataValues };
 }
 
 async function deleteMeInteraction(id) {
