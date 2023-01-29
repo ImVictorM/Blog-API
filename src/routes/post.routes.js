@@ -10,6 +10,11 @@ postRouter.get(
   postCont.requestAll,
 );
 postRouter.get(
+  '/search',
+  validateToken,
+  postCont.requestAllByTerm,
+);
+postRouter.get(
   '/:id',
   validateToken,
   postCont.requestById,

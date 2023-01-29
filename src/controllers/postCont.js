@@ -49,10 +49,17 @@ async function requestDelete(req, res) {
   return res.status(204).end();
 }
 
+async function requestAllByTerm(req, res) {
+  const { query: { q: term } } = req;
+  const { message } = await postServ.getAllByTerm(term);
+  return res.status(200).json(message);
+}
+
 module.exports = {
   requestUpdate,
   requestCreation,
   requestAll,
   requestById,
   requestDelete,
+  requestAllByTerm,
 };

@@ -1,4 +1,6 @@
 const Sequelize = require('sequelize');
+
+const { Op } = Sequelize;
 const { BlogPost, PostCategory, Category, User } = require('../models');
 const config = require('../config/config');
 const { postValid } = require('./validations');
@@ -32,16 +34,8 @@ async function createInteraction(newPost, userId) {
 async function getAll() {
   const posts = await BlogPost.findAll({
     include: [
-      {
-        model: Category,
-        through: { attributes: [] },
-        as: 'categories',
-      },
-      {
-        model: User,
-        as: 'user',
-        attributes: { exclude: ['password'] },
-      },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
     ],
   });
   return { errorCode: null, message: posts };
@@ -50,16 +44,8 @@ async function getAll() {
 async function getById(id) {
   const post = await BlogPost.findByPk(id, {
     include: [
-      {
-        model: Category,
-        through: { attributes: [] },
-        as: 'categories',
-      },
-      {
-        model: User,
-        as: 'user',
-        attributes: { exclude: ['password'] },
-      },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
     ],
   });
   if (!post) {
@@ -97,10 +83,27 @@ async function deleteInteraction(postId, userId) {
   }
 }
 
+async function getAllByTerm(term) {
+  const posts = await BlogPost.findAll({
+    where: {
+      [Op.or]: [
+        { title: { [Op.like]: `%${term}%` } },
+        { content: { [Op.like]: `%${term}%` } },
+      ],
+    },
+    include: [
+      { model: Category, through: { attributes: [] }, as: 'categories' },
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+    ],
+  });
+  return { errorCode: null, message: posts };
+}
+
 module.exports = {
   createInteraction,
   getAll,
   getById,
   updateInteraction,
   deleteInteraction,
+  getAllByTerm,
 };
