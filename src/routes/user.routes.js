@@ -18,5 +18,10 @@ userRouter.post(
   '/', 
   userCont.requestCreation,
 );
+userRouter.delete(
+  '/me',
+  validateToken,
+  userCont.requestToDeleteMe,
+);
 
 module.exports = userRouter;

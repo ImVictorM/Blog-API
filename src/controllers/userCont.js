@@ -23,8 +23,18 @@ async function requestById(req, res) {
   return res.status(200).json(message);
 }
 
+async function requestToDeleteMe(req, res) {
+  const { user } = req;
+  const { errorCode, message } = await userServ.deleteMeInteraction(user.id);
+  if (errorCode) {
+    return res.status(errorCode).json({ message });
+  }
+  return res.status(204).end();
+}
+
 module.exports = {
   requestCreation,
   requestAll,
   requestById,
+  requestToDeleteMe,
 };

@@ -56,11 +56,23 @@ async function getByEmail(email) {
     errorCode: null,
     message: user,
   };
-} 
+}
+
+async function deleteMeInteraction(id) {
+  try {
+    await User.destroy({
+      where: { id },
+    });
+    return { errorCode: null, message: 'Deleted successfully' };
+  } catch (error) {
+    return { errorCode: 500, message: error.message };
+  }
+}
 
 module.exports = {
   createInteraction,
   getAll,
   getById,
   getByEmail,
+  deleteMeInteraction,
 };
