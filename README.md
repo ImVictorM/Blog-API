@@ -179,3 +179,11 @@ npm run debug
 ```
 
 </details>
+
+## Endpoints 🌐
+
+Click here to export automatically:
+
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Blog%20API&uri=https%3A%2F%2Fraw.githubusercontent.com%2FImVictorM%2FBlog-API%2Fmain%2FinsomniaEndpoints.json)
+
+Or just import the file `insomniaRoutes.json` inside your environment: https://docs.insomnia.rest/insomnia/import-export-data
