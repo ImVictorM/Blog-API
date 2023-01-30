@@ -132,7 +132,7 @@ git clone git@github.com:ImVictorM/Blog-API.git && cd Blog-API
 ### Methods
 
 <details>
-<summary><h4>🐋 Running with docker</h4></summary>
+<summary><h4>🐋 Running with docker (recommended)</h4></summary>
 
  > You must have docker installed
  
@@ -161,7 +161,7 @@ npm run debug
 <details>
 <summary><h4>🖥️ Running locally</h4></summary>
 
- > You must have node installed
+ > You must have node and MySQL installed
  
 2. Install the dependencies
 ```
